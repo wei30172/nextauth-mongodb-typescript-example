@@ -21,7 +21,11 @@ import { Button } from '@/components/ui/button'
 import GoogleSignInButton from '@/components/button/GoogleSignInButton'
 import { useToast } from '@/components/ui/use-toast'
 
-const SignUpForm = () => {
+interface SignUpFormProps {
+  callbackUrl: string;
+}
+
+const SignUpForm: React.FC<SignUpFormProps> = ({ callbackUrl }) => {
   const { pending } = useFormStatus()
   const { toast } = useToast()
 
@@ -126,7 +130,7 @@ const SignUpForm = () => {
         <span className='px-2 text-gray-400'>or</span>
         <div className='border-b border-gray-400 w-full'></div>
       </div>
-      <GoogleSignInButton>
+      <GoogleSignInButton callbackUrl={callbackUrl}>
         Sign up with Google
       </GoogleSignInButton>
       <p className='text-center text-sm text-gray-600 mt-2'>
@@ -136,7 +140,7 @@ const SignUpForm = () => {
         </Link>
       </p>
     </Form>
-  );
-};
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm

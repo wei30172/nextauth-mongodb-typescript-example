@@ -21,7 +21,11 @@ import { Button } from '@/components/ui/button'
 import GoogleSignInButton from '@/components/button/GoogleSignInButton'
 import { useToast } from '@/components/ui/use-toast'
 
-const SignInForm: React.FC = () => {
+interface SignInFormProps {
+  callbackUrl: string
+}
+
+const SignInForm: React.FC<SignInFormProps> = ({ callbackUrl }) => {
   const { pending } = useFormStatus()
   const { toast } = useToast()
 
@@ -31,14 +35,14 @@ const SignInForm: React.FC = () => {
       email: '',
       password: '',
     }
-  });
+  })
 
   const onSubmit = async (values: z.infer<typeof UserSignInValidation>) => {
     console.log(values)
     toast({
       description: 'Sign in suceesfully.'
     })
-  };
+  }
 
   return (
     <Form {...form}>
@@ -91,7 +95,7 @@ const SignInForm: React.FC = () => {
         <span className='px-2 text-gray-400'>or</span>
         <div className='border-b border-gray-400 w-full'></div>
       </div>
-      <GoogleSignInButton>
+      <GoogleSignInButton callbackUrl={callbackUrl}>
         Sign in with Google
       </GoogleSignInButton>
       <p className='text-center text-sm text-gray-600 mt-2'>
@@ -101,7 +105,7 @@ const SignInForm: React.FC = () => {
         </Link>
       </p>
     </Form>
-  );
-};
+  )
+}
 
-export default SignInForm;
+export default SignInForm
