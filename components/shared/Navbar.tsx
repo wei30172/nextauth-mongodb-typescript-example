@@ -14,11 +14,16 @@ const Navbar = async () => {
         <Link href='/'>
           <Code />
         </Link>
-        <Link href='/profile'>
-          Profile
+        <Link href='/dashboard'>
+          Dashboard
         </Link>
         {session ? (
-          <SignOutButton />
+          <>
+            <Link href='/profile'>
+              Profile
+            </Link>
+            <SignOutButton />
+          </>
         ) : (
           <Link className={buttonVariants()} href='/signin'>
             Sign in
