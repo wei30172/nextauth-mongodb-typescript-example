@@ -32,19 +32,19 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ callbackUrl }) => {
   const form = useForm<z.infer<typeof UserSignUpValidation>>({
     resolver: zodResolver(UserSignUpValidation),
     defaultValues: {
-      username: '',
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
-    },
-  });
+    }
+  })
 
   const onSubmit = async (values: z.infer<typeof UserSignUpValidation>) => {
     console.log(values)
     toast({
       description: 'Sign up suceesfully.'
     })
-  };
+  }
 
   return (
     <Form {...form}>
@@ -52,7 +52,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ callbackUrl }) => {
         <div className='space-y-2'>
           <FormField
             control={form.control}
-            name='username'
+            name='name'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Username</FormLabel>

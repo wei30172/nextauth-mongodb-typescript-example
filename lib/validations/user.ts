@@ -9,11 +9,11 @@ export const UserSignInValidation = z.object({
     .string()
     .min(1, 'Password is required')
     .min(8, 'Password must have than 8 characters'),
-});
+})
 
 export const UserSignUpValidation = z
   .object({
-    username: z
+    name: z
       .string()
       .min(1, 'Username is required')
       .max(50),
@@ -31,4 +31,4 @@ export const UserSignUpValidation = z
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
     message: 'Password do not match',
-  });
+  })
