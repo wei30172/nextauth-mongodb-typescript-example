@@ -20,16 +20,17 @@ export const nextauthOptions: NextAuthOptions = {
       }
       return true
     },
-    async jwt({ token }) {
-      // console.log({token})
-      if (token.email) {
-        const user = await getUserByEmail({email: token.email})
-        // console.log({user})
-        return {
-          ...token,
-          _id: user._id,
-          role: user.role,
-          provider: user.provider
+    async jwt({ token, trigger, session }) {
+      // console.log({token, trigger, session})
+      if (trigger === 'update') {
+        token.name = session.name
+      } else {
+        if (token.email) {
+          const user = await getUserByEmail({email: token.email})
+          // console.log({user})
+          token._id = user._id
+          token.role = user.role
+          token.provider = user.provider
         }
       }
       return token

@@ -9,12 +9,16 @@ export async function getSession () {
 }
 
 interface UpdateUserProfileParams {
-  name: string
+  name?: string,
+  password?: string,
+  confirmPassword?: string
 }
 
 export async function updateUserProfile ({
   name
 }: UpdateUserProfileParams) {
+  'use server'
+  
   const session = await getServerSession(nextauthOptions)
 
   if (!session) {
@@ -32,7 +36,7 @@ export async function updateUserProfile ({
 
     return { success: true }
   } catch (error) {
-    return { error: `Failed to update: ${(error as Error).message}` }
+    return { error: `Failed to update: ${(error as Error).message}.` }
   }
 }
 

@@ -1,7 +1,10 @@
-const ProfilePage = () => {
+import UpdateForm from '@/components/form/UpdateForm'
+import { updateUserProfile } from '@/lib/actions/user.actions'
+
+const ProfilePage: React.FC = () => {
   return (
     <div className='w-full'>
-      <h1>Welcome to the Profile Page</h1>
+      <UpdateForm updateUserProfile={updateUserProfile}/>
     </div>
   );
 };
