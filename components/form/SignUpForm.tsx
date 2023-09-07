@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { userSignUpValidation } from '@/lib/validations/user'
+import { SignUpWithCredentialsParams, ActionResponse } from '@/lib/actions/auth.actions';
 
 import {
   Form,
@@ -22,10 +23,15 @@ import GoogleSignInButton from '@/components/button/GoogleSignInButton'
 import { useToast } from '@/components/ui/use-toast'
 
 interface SignUpFormProps {
-  callbackUrl: string;
+  callbackUrl: string
+  signUpWithCredentials: (values: SignUpWithCredentialsParams) => Promise<ActionResponse>
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ callbackUrl }) => {
+function SignUpForm({
+  callbackUrl,
+  signUpWithCredentials
+}: SignUpFormProps) {
+  const router = useRouter()
   const { pending } = useFormStatus()
   const { toast } = useToast()
 
@@ -40,10 +46,20 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ callbackUrl }) => {
   })
 
   const onSubmit = async (values: z.infer<typeof userSignUpValidation>) => {
-    console.log(values)
-    toast({
-      description: 'Sign up suceesfully.'
-    })
+    // console.log(values)
+    const res = await signUpWithCredentials(values)
+
+    if (res.success) {
+      toast({
+        description: 'Sign up suceesfully.'
+      })
+      router.push('/signin')
+    } else {
+      toast({
+        description: `${res.error || 'Sign up failed.'}`,
+        variant: 'destructive'
+      })
+    }
   }
 
   return (
@@ -131,7 +147,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ callbackUrl }) => {
         <div className='border-b border-gray-400 w-full'></div>
       </div>
       <GoogleSignInButton callbackUrl={callbackUrl}>
-        Sign up with Google
+        login with Google
       </GoogleSignInButton>
       <p className='text-center text-sm text-gray-600 mt-2'>
         Already have an account?&nbsp;

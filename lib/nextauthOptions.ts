@@ -3,6 +3,10 @@ import GoogleProvider from 'next-auth/providers/google'
 import { signInWithOauth, getUserByEmail } from '@/lib/actions/auth.actions'
 
 export const nextauthOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt'
+  },
   pages: {
     signIn: '/signin', // app/signin
   },
@@ -28,6 +32,7 @@ export const nextauthOptions: NextAuthOptions = {
         if (token.email) {
           const user = await getUserByEmail({email: token.email})
           // console.log({user})
+          token.name = user.name
           token._id = user._id
           token.role = user.role
           token.provider = user.provider
@@ -41,6 +46,7 @@ export const nextauthOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
+          name: token.name,
           _id: token._id,
           role: token.role,
           provider: token.provider
