@@ -1,14 +1,19 @@
 import { getServerSession } from 'next-auth'
 import { nextauthOptions } from '@/lib/nextauthOptions'
+import connectDB from '@/lib/mongodb'
 import User from '@/lib/models/user.model'
-import { redirect } from 'next/navigation'
 
-export async function getSession () {
+export type ActionResponse = {
+  success?: boolean
+  error?: string
+}
+
+export async function getUserSession () {
   const session = await getServerSession(nextauthOptions)
   return ({ session })
 }
 
-interface UpdateUserProfileParams {
+export interface UpdateUserProfileParams {
   name?: string,
   password?: string,
   confirmPassword?: string
@@ -18,7 +23,6 @@ export async function updateUserProfile ({
   name
 }: UpdateUserProfileParams) {
   'use server'
-  
   const session = await getServerSession(nextauthOptions)
 
   if (!session) {
@@ -26,6 +30,8 @@ export async function updateUserProfile ({
   }
 
   try {
+    connectDB()
+    
     const user = await User.findByIdAndUpdate(session?.user?._id, {
       name
     }, { new: true }).select('-password')

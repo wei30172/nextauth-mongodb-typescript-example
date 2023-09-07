@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { userUpdateValidation } from '@/lib/validations/user'
+import { UpdateUserProfileParams, ActionResponse } from '@/lib/actions/user.actions';
 
 import {
   Form,
@@ -23,10 +24,12 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 
 interface UpdateFormProps {
-  updateUserProfile: any;
+  updateUserProfile: (values: UpdateUserProfileParams) => Promise<ActionResponse>
 }
 
-const UpdateForm: React.FC<UpdateFormProps> = ({updateUserProfile}) => {
+function UpdateForm({
+  updateUserProfile
+}: UpdateFormProps) {
   const { update } = useSession()
   const { pending } = useFormStatus()
   const { toast } = useToast()
