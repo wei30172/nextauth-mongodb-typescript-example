@@ -12,11 +12,13 @@ export const metadata: Metadata = {
   description: 'Admin Auth',
 }
 
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>

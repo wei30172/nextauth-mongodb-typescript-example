@@ -6,7 +6,10 @@ interface GoogleSignInButtonProps {
   callbackUrl: string
 }
 
-const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({ children, callbackUrl }) => {
+function GoogleSignInButton({
+  children,
+  callbackUrl
+}: GoogleSignInButtonProps) {
   const loginWithGoogle = async () => {
     await signIn('google', { callbackUrl })
   }

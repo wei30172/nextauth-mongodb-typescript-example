@@ -1,7 +1,10 @@
-const Dashboard = () => {
-  return (
-    <h1>Welcome to the Dashboard</h1>
-  );
-};
+import { getUserSession } from '@/lib/actions/user.actions'
 
-export default Dashboard
+export default async function Dashboard() {
+  const { session } = await getUserSession()
+  // console.log(session)
+
+  return (
+    <h1>{`Hi, ${session?.user?.name}.`} Welcome to the Dashboard</h1>
+  );
+}

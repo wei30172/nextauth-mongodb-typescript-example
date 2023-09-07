@@ -8,7 +8,7 @@ import {
   AvatarImage,
 } from '@/components/ui/avatar'
 
-const UserAvatar = () => {
+function UserAvatar() {
   const { data: session, update } = useSession()
 
   return (
