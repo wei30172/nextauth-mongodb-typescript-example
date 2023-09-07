@@ -6,7 +6,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { UserSignInValidation } from '@/lib/validations/user'
+import { userSignInValidation } from '@/lib/validations/user'
 
 import {
   Form,
@@ -29,15 +29,15 @@ const SignInForm: React.FC<SignInFormProps> = ({ callbackUrl }) => {
   const { pending } = useFormStatus()
   const { toast } = useToast()
 
-  const form = useForm<z.infer<typeof UserSignInValidation>>({
-    resolver: zodResolver(UserSignInValidation),
+  const form = useForm<z.infer<typeof userSignInValidation>>({
+    resolver: zodResolver(userSignInValidation),
     defaultValues: {
       email: '',
       password: '',
     }
   })
 
-  const onSubmit = async (values: z.infer<typeof UserSignInValidation>) => {
+  const onSubmit = async (values: z.infer<typeof userSignInValidation>) => {
     console.log(values)
     toast({
       description: 'Sign in suceesfully.'
