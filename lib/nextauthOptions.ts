@@ -25,16 +25,26 @@ export const nextauthOptions: NextAuthOptions = {
       if (token.email) {
         const user = await getUserByEmail({email: token.email})
         // console.log({user})
-        token.user = user
+        return {
+          ...token,
+          _id: user._id,
+          role: user.role,
+          provider: user.provider
+        }
       }
       return token
     },
     async session({ session, token }) {
       // console.log({session, token})
-      if (token.user) {
-        session.user = token.user
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          _id: token._id,
+          role: token.role,
+          provider: token.provider
+        }
       }
-      return session
     }
   }
 }
