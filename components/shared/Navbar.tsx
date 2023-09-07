@@ -2,10 +2,10 @@ import Link from 'next/link'
 import { Code } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import SignOutButton from '@/components/button/SignOutButton'
-import { GetSession } from '@/lib/actions/user.actions'
+import { getSession } from '@/lib/actions/user.actions'
 
 const Navbar = async () => {
-  const { session } = await GetSession()
+  const { session } = await getSession()
   // console.log(session)
 
   return (
