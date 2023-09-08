@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/avatar'
 
 function UserAvatar() {
-  const { data: session, update } = useSession()
+  const { data: session } = useSession()
 
   return (
     <div className='mb-4'>
