@@ -31,8 +31,9 @@ export const userSignUpValidation = z
 export const userUpdateValidation = z
   .object({
     name: z.string()
+      .min(1, 'Username is required')
       .max(50, 'Username must be less than 50 characters')
-      .optional(),
+      .optional()
     // password: z.string()
     //   .min(8, 'Password must have than 8 characters')
     //   .optional()

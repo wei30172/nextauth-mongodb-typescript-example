@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { userSignUpValidation } from '@/lib/validations/user'
-import { SignUpWithCredentialsParams, ActionResponse } from '@/lib/actions/auth.actions';
+import { SignUpWithCredentialsParams } from '@/lib/actions/auth.actions';
 
 import {
   Form,
@@ -24,8 +24,7 @@ import { useToast } from '@/components/ui/use-toast'
 
 interface SignUpFormProps {
   callbackUrl: string
-  signUpWithCredentials: (values: SignUpWithCredentialsParams) => Promise<ActionResponse>
-}
+  signUpWithCredentials: (values: SignUpWithCredentialsParams) => Promise<{success?: boolean}>}
 
 function SignUpForm({
   callbackUrl,
@@ -49,16 +48,11 @@ function SignUpForm({
     // console.log(values)
     const res = await signUpWithCredentials(values)
 
-    if (res.success) {
+    if (res?.success) {
       toast({
         description: 'Sign up suceesfully.'
       })
       router.push('/signin')
-    } else {
-      toast({
-        description: `${res.error || 'Sign up failed.'}`,
-        variant: 'destructive'
-      })
     }
   }
 

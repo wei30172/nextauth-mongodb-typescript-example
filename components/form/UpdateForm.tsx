@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { userUpdateValidation } from '@/lib/validations/user'
-import { UpdateUserProfileParams, ActionResponse } from '@/lib/actions/user.actions';
+import { UpdateUserProfileParams } from '@/lib/actions/user.actions';
 
 import {
   Form,
@@ -24,8 +24,7 @@ import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
 
 interface UpdateFormProps {
-  updateUserProfile: (values: UpdateUserProfileParams) => Promise<ActionResponse>
-}
+  updateUserProfile: (values: UpdateUserProfileParams) => Promise<{success?: boolean}>}
 
 function UpdateForm({
   updateUserProfile
@@ -48,14 +47,9 @@ function UpdateForm({
     // console.log(values)
     const res = await updateUserProfile(values)
 
-    if (res.success) {
+    if (res?.success) {
       toast({
         description: 'Update suceesfully.'
-      })
-    } else {
-      toast({
-        description: `${res.error || 'Update failed.'}`,
-        variant: 'destructive'
       })
     }
   }

@@ -1,13 +1,9 @@
 import { Account, Profile } from 'next-auth'
+import { redirect } from 'next/navigation'
 import bcrypt from 'bcrypt'
 import connectDB from '@/lib/mongodb'
 import User from '@/lib/models/user.model'
-import { generateToken } from '@/lib/token'
-
-export type ActionResponse = {
-  success?: boolean
-  error?: string
-}
+import { generateToken } from '@/lib/utils/token'
 
 interface ExtendedProfile extends Profile {
   picture?: string;
@@ -54,7 +50,7 @@ export async function getUserByEmail({
   const user = await User.findOne({email}).select('-password')
   
   if (!user) {
-    return { error: 'User does not exist!' }
+    throw new Error('User does not exist!')
   }
 
   // console.log({user}) // _id: new ObjectId("64f811a7f737a8d376bdabce")
@@ -73,32 +69,29 @@ export async function signUpWithCredentials ({
   password
 }: SignUpWithCredentialsParams) {
   'use server'
-
   connectDB()
-  
+
   try {
     const user = await User.findOne({email})
 
-    if (user){
-      return { error: 'User already exists.' }
+    if (user) {
+      throw new Error('User already exists.')
     }
 
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
-  
-    const newUser = {
+
+    const newUser = new User({
       name,
       email,
       password: hashedPassword
-    }
+    })
 
-    // const token = generateToken({ user: newUser })
-    // console.log({token})
+    // console.log({newUser})
+    await newUser.save()
 
-    await new User(newUser).save()
-  
     return { success: true }
   } catch (error) {
-    return { error: `Failed to sign up: ${(error as Error).message}.` }
+    redirect(`/error?error=${(error as Error).message}`)
   }
 }

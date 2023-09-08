@@ -1,12 +1,8 @@
 import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 import { nextauthOptions } from '@/lib/nextauthOptions'
 import connectDB from '@/lib/mongodb'
 import User from '@/lib/models/user.model'
-
-export type ActionResponse = {
-  success?: boolean
-  error?: string
-}
 
 export async function getUserSession () {
   const session = await getServerSession(nextauthOptions)
@@ -26,23 +22,23 @@ export async function updateUserProfile ({
   const session = await getServerSession(nextauthOptions)
 
   if (!session) {
-    return { error: 'Unauthorization!' }
+    throw new Error('Unauthorization!')
   }
 
-  try {
-    connectDB()
+  connectDB()
     
+  try {
     const user = await User.findByIdAndUpdate(session?.user?._id, {
       name
     }, { new: true }).select('-password')
-
+  
     if (!user) {
-      return { error: 'User does not exist!' }
+      throw new Error('User does not exist!')
     }
-
+  
     return { success: true }
   } catch (error) {
-    return { error: `Failed to update: ${(error as Error).message}.` }
+    redirect(`/error?error=${(error as Error).message}`)
   }
 }
 
