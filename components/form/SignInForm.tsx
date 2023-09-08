@@ -5,8 +5,8 @@ import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { userSignInValidation } from '@/lib/validations/user'
+import { signIn } from 'next-auth/react'
 
 import {
   Form,
@@ -19,15 +19,15 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import GoogleSignInButton from '@/components/button/GoogleSignInButton'
-import { useToast } from '@/components/ui/use-toast'
 
 interface SignInFormProps {
   callbackUrl: string
 }
 
-const SignInForm: React.FC<SignInFormProps> = ({ callbackUrl }) => {
+function SignInForm({
+  callbackUrl
+}: SignInFormProps) {
   const { pending } = useFormStatus()
-  const { toast } = useToast()
 
   const form = useForm<z.infer<typeof userSignInValidation>>({
     resolver: zodResolver(userSignInValidation),
@@ -38,9 +38,11 @@ const SignInForm: React.FC<SignInFormProps> = ({ callbackUrl }) => {
   })
 
   const onSubmit = async (values: z.infer<typeof userSignInValidation>) => {
-    console.log(values)
-    toast({
-      description: 'Sign in suceesfully.'
+    // console.log(values)
+    await signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      callbackUrl
     })
   }
 
@@ -96,7 +98,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ callbackUrl }) => {
         <div className='border-b border-gray-400 w-full'></div>
       </div>
       <GoogleSignInButton callbackUrl={callbackUrl}>
-        Sign in with Google
+        Login with Google
       </GoogleSignInButton>
       <p className='text-center text-sm text-gray-600 mt-2'>
         Don&apos;t have an account?&nbsp;

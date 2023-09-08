@@ -95,3 +95,32 @@ export async function signUpWithCredentials ({
     redirect(`/error?error=${(error as Error).message}`)
   }
 }
+
+export interface SignInWithCredentialsParams {
+  email: string,
+  password: string,
+}
+
+export async function signInWithCredentials ({
+  email,
+  password
+}: SignInWithCredentialsParams) {
+  connectDB()
+  
+  const user = await User.findOne({email})
+
+  if (!user) {
+    throw new Error('Invalid email or password!')
+  }
+
+  const passwordIsValid = await bcrypt.compare(
+    password,
+    user.password
+  )
+
+  if (!passwordIsValid) {
+    throw new Error('Invalid email or password!')
+  }
+    
+  return {...user._doc, _id: user._id.toString()}
+}
