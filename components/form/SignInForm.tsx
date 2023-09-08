@@ -5,7 +5,7 @@ import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import { userSignInValidation } from '@/lib/validations/user'
+import { userSignInValidation } from '@/lib/validations/auth'
 import { signIn } from 'next-auth/react'
 
 import {

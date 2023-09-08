@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { signOut } from 'next-auth/react'
 
 function SignOutButton() {
-  const signout = async () => {
+  const signout = () => {
     signOut({
       redirect: true,
       callbackUrl: `${window.location.origin}/signin`

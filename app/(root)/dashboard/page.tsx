@@ -1,4 +1,4 @@
-import { getUserSession } from '@/lib/actions/user.actions'
+import { getUserSession } from '@/lib/actions/auth.actions'
 
 export default async function Dashboard() {
   const { session } = await getUserSession()

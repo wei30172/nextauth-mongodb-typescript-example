@@ -33,15 +33,24 @@ export const userUpdateValidation = z
     name: z.string()
       .min(1, 'Username is required')
       .max(50, 'Username must be less than 50 characters')
-      .optional()
-    // password: z.string()
-    //   .min(8, 'Password must have than 8 characters')
-    //   .optional()
-    //   .or(z.literal('')),
-    // confirmPassword: z.string()
-    //   .optional()
   })
-  // .refine((data) => data.password === data.confirmPassword, {
-  //   path: ['confirmPassword'],
-  //   message: 'Password do not match',
-  // })
+
+export const changePasswordValidation = z
+  .object({
+    oldPassword: z.string()
+      .min(1, 'Old password is required')
+      .min(8, 'Password must have than 8 characters'),
+    newPassword: z.string()
+      .min(1, 'New password is required')
+      .min(8, 'Password must have than 8 characters'),
+    confirmPassword: z.string()
+      .min(1, 'Password confirmation is required'),
+  })
+  .refine((data) => data.oldPassword !== data.newPassword, {
+    path: ['newPassword'],
+    message: 'New password must differ from old.',
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'Password do not match',
+  })

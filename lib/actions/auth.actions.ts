@@ -1,9 +1,15 @@
 import { Account, Profile } from 'next-auth'
 import { redirect } from 'next/navigation'
 import bcrypt from 'bcrypt'
+import { getServerSession } from 'next-auth'
+import { nextauthOptions } from '@/lib/nextauthOptions'
 import connectDB from '@/lib/mongodb'
 import User from '@/lib/models/user.model'
-import { generateToken } from '@/lib/utils/token'
+
+export async function getUserSession () {
+  const session = await getServerSession(nextauthOptions)
+  return ({ session })
+}
 
 interface ExtendedProfile extends Profile {
   picture?: string;
@@ -55,6 +61,38 @@ export async function getUserByEmail({
 
   // console.log({user}) // _id: new ObjectId("64f811a7f737a8d376bdabce")
   return {...user._doc, _id: user._id.toString()}
+}
+
+export interface UpdateUserProfileParams {
+  name: string,
+}
+
+export async function updateUserProfile ({
+  name
+}: UpdateUserProfileParams) {
+  'use server'
+  const session = await getServerSession(nextauthOptions)
+  // console.log(session)
+
+  connectDB()
+    
+  try {
+    if (!session) {
+      throw new Error('Unauthorization!')
+    }
+
+    const user = await User.findByIdAndUpdate(session?.user?._id, {
+      name
+    }, { new: true }).select('-password')
+  
+    if (!user) {
+      throw new Error('User does not exist!')
+    }
+  
+    return { success: true }
+  } catch (error) {
+    redirect(`/error?error=${(error as Error).message}`)
+  }
 }
 
 export interface SignUpWithCredentialsParams {
@@ -111,6 +149,7 @@ export async function signInWithCredentials ({
 
   if (!user) {
     throw new Error('Invalid email or password!')
+    // throw new Error('User does not exist!')
   }
 
   const passwordIsValid = await bcrypt.compare(
@@ -120,6 +159,7 @@ export async function signInWithCredentials ({
 
   if (!passwordIsValid) {
     throw new Error('Invalid email or password!')
+    // throw new Error('Invalid password!')
   }
     
   return {...user._doc, _id: user._id.toString()}

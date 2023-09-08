@@ -5,10 +5,9 @@ import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { userUpdateValidation } from '@/lib/validations/user'
-import { UpdateUserProfileParams } from '@/lib/actions/user.actions';
+import { userUpdateValidation } from '@/lib/validations/auth'
+import { UpdateUserProfileParams } from '@/lib/actions/auth.actions';
 
 import {
   Form,
@@ -29,16 +28,14 @@ interface UpdateFormProps {
 function UpdateForm({
   updateUserProfile
 }: UpdateFormProps) {
-  const { update } = useSession()
+  const { data: session, update } = useSession()
   const { pending } = useFormStatus()
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof userUpdateValidation>>({
     resolver: zodResolver(userUpdateValidation),
     defaultValues: {
-      name: '',
-      // password: '',
-      // confirmPassword: '',
+      name: ''
     }
   })
 
@@ -49,7 +46,7 @@ function UpdateForm({
 
     if (res?.success) {
       toast({
-        description: 'Update suceesfully.'
+        description: 'Update successfully.'
       })
     }
   }
@@ -75,40 +72,6 @@ function UpdateForm({
               </FormItem>
             )}
           />
-          {/* <FormField
-            control={form.control}
-            name='password'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type='password'
-                    placeholder='your password'
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='confirmPassword'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm your password</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder='Confirm your password'
-                    type='password'
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
         </div>
         <Button
           className='w-full mt-6'
@@ -118,6 +81,16 @@ function UpdateForm({
           {pending ? 'Submitting...' : 'Update'}
         </Button>
       </form>
+      {session?.user.provider === 'credentials' && <>
+        <div className='flex items-center justify-center mt-4 mb-8'>
+          <div className='border-b border-gray-400 w-full'></div>
+        </div>
+        <p className='text-center text-sm text-gray-600 mt-2'>
+          <Link className='text-blue-600 hover:underline' href='/change-password'>
+            Change Password
+          </Link>
+        </p>
+      </>}
     </Form>
   )
 }

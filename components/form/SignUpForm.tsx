@@ -6,7 +6,7 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { userSignUpValidation } from '@/lib/validations/user'
+import { userSignUpValidation } from '@/lib/validations/auth'
 import { SignUpWithCredentialsParams } from '@/lib/actions/auth.actions';
 
 import {
@@ -50,7 +50,7 @@ function SignUpForm({
 
     if (res?.success) {
       toast({
-        description: 'Sign up suceesfully.'
+        description: 'Sign up successfully.'
       })
       router.push('/signin')
     }
