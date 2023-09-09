@@ -3,10 +3,15 @@ A demo project using Next-Auth for authentication. It connects to MongoDB via Mo
 
 ## Features:
 OAuth: Log in with Google.
+
 Credential Login: Use email and password.
+
 SignUp: Register with name, email, password.
+
 Profile Edit: Change user details.
+
 Password Change: Safely update passwords.
+
 Secure Routes: Access only for logged-in users / admins.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
