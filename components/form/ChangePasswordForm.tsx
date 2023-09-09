@@ -123,6 +123,14 @@ function ChangePasswordForm({
         >
           {pending ? 'Submitting...' : 'Submit'}
         </Button>
+        <Button
+          onClick={() => router.back()}
+          className='w-full mt-2'
+          disabled={pending}
+          variant='outline'
+        >
+          Cancel
+        </Button>
       </form>
     </Form>
   )
