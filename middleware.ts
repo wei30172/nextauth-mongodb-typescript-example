@@ -7,10 +7,10 @@ export default withAuth(
     // console.log(req.nextauth.token)
     // console.log(req.nextUrl)
     const { token } = req.nextauth
-    const { pathname } = req.nextUrl
+    const { pathname, origin } = req.nextUrl
 
     if (pathname.startsWith('/dashboard') && token?.role !== 'admin') {
-      return new NextResponse('You Are Not Authorized!')
+      return NextResponse.redirect(`${origin}/unauthorized`)
     }
   },
   {
