@@ -1,4 +1,4 @@
-## Next-Auth with Next.js
+## Next.js with Next-Auth  
 A demo project using Next-Auth for authentication. It connects to MongoDB via Mongoose and supports Google OAuth and email/password logins.
 
 ## Features:
