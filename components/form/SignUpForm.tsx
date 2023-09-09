@@ -19,7 +19,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import GoogleSignInButton from '@/components/button/GoogleSignInButton'
 import { useToast } from '@/components/ui/use-toast'
 
 interface SignUpFormProps {
@@ -27,7 +26,6 @@ interface SignUpFormProps {
   signUpWithCredentials: (values: SignUpWithCredentialsParams) => Promise<{success?: boolean}>}
 
 function SignUpForm({
-  callbackUrl,
   signUpWithCredentials
 }: SignUpFormProps) {
   const router = useRouter()
@@ -140,9 +138,6 @@ function SignUpForm({
         <span className='px-2 text-gray-400'>or</span>
         <div className='border-b border-gray-400 w-full'></div>
       </div>
-      <GoogleSignInButton callbackUrl={callbackUrl}>
-        login with Google
-      </GoogleSignInButton>
       <p className='text-center text-sm text-gray-600 mt-2'>
         Already have an account?&nbsp;
         <Link className='text-blue-600 hover:underline' href='/signin'>

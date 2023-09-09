@@ -98,7 +98,7 @@ function SignInForm({
         <div className='border-b border-gray-400 w-full'></div>
       </div>
       <GoogleSignInButton callbackUrl={callbackUrl}>
-        Login with Google
+        Sign in with Google
       </GoogleSignInButton>
       <p className='text-center text-sm text-gray-600 mt-2'>
         Don&apos;t have an account?&nbsp;
