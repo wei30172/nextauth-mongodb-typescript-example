@@ -31,7 +31,7 @@ MONGODB_URI="YOUR_MONGODB_URI"
 
 GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET
 
-- Navigate to Google Cloud Console [https://console.cloud.google.com]([https://console.cloud.google.com) .
+- Navigate to [https://console.cloud.google.com](https://console.cloud.google.com/) .
 
 - Create a new project.
 
