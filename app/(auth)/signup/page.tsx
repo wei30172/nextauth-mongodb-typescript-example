@@ -1,4 +1,4 @@
-import SignUpForm from '@/components/form/SignUpForm'
+import SignUpForm from '@/components/form/signup-form'
 import { signUpWithCredentials } from '@/lib/actions/auth.actions';
 
 interface SignUpPageProps {

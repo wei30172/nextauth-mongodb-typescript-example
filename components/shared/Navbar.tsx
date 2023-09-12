@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import MainNav from '@/components/shared/MainNav'
-import UserNav from '@/components/shared/UserNav'
-import ModeToggle from '@/components/shared/ModeToggle'
+import MainNav from '@/components/shared/main-nav'
+import UserNav from '@/components/shared/user-nav'
+import ModeToggle from '@/components/shared/mode-toggle'
 import { Code } from 'lucide-react'
 
 async function Navbar() {

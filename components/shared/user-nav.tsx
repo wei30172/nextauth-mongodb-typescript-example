@@ -10,8 +10,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { buttonVariants } from '@/components/ui/button'
-import SignOutButton from '@/components/button/SignOutButton'
-import UserAvatar from '@/components/shared/UserAvatar'
+import SignOutButton from '@/components/button/signout-button'
+import UserAvatar from '@/components/shared/user-avatar'
 
 async function UserNav() {
   const { session } = await getUserSession()

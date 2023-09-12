@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import GoogleSignInButton from '@/components/button/GoogleSignInButton'
+import GoogleSignInButton from '@/components/button/google-signin-button'
 
 interface SignInFormProps {
   callbackUrl: string

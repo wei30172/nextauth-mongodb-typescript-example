@@ -1,4 +1,4 @@
-import ChangePasswordForm from '@/components/form/ChangePasswordForm'
+import ChangePasswordForm from '@/components/form/change-password-form'
 import { changeUserPassword } from '@/lib/actions/auth.actions'
 
 export default function ChangePasswordPage() {
