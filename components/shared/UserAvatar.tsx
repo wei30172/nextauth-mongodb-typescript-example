@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from 'next-auth/react';
-
+import { UserCircle2 } from 'lucide-react'
 import {
   Avatar,
   AvatarFallback,
@@ -12,14 +12,16 @@ function UserAvatar() {
   const { data: session } = useSession()
 
   return (
-    <div className='mb-4'>
-      {session?.user.image && 
-        <Avatar className='mx-auto'>
+    <div>
+      {session?.user.image ? (
+        <Avatar className='mx-auto w-8 h-8'>
           <AvatarImage src={session?.user.image} alt='user avatar' />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-      }
-      <p className='w-full text-center'>{session?.user.name}</p>
+      ) : (
+        <UserCircle2 className='mx-auto w-8 h-8'/>
+      )}
+      <p className='w-full text-center text-xs'>{session?.user.name}</p>
     </div>
   )
 }

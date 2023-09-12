@@ -6,8 +6,8 @@ export default function AuthLayout({
   children
 }: AuthLayoutProps) {
   return (
-    <div className='bg-gray-100 p-8 rounded-md'>
+    <section className='border border-gray-200 p-8 rounded-md'>
       {children}
-    </div>
+    </section>
   )
 }

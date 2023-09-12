@@ -6,5 +6,5 @@ export default async function Dashboard() {
 
   return (
     <h1>{`Hi, ${session?.user?.name}.`} Welcome to the Dashboard</h1>
-  );
+  )
 }
