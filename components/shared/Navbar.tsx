@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import MainNav from '@/components/shared/MainNav'
 import UserNav from '@/components/shared/UserNav'
+import ModeToggle from '@/components/shared/ModeToggle'
 import { Code } from 'lucide-react'
 
 async function Navbar() {
@@ -13,6 +14,7 @@ async function Navbar() {
         </Link>
         <MainNav />
         <div className='ml-auto flex items-center space-x-4'>
+          <ModeToggle />
           <UserNav />
         </div>
       </nav>

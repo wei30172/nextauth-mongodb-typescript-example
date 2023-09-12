@@ -1,9 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { AuthProvider } from '@/providers/AuthProvider'
-import { Toaster } from '@/components/ui/toaster'
 
+import { AuthProvider } from '@/providers/AuthProvider'
+import { ThemeProvider } from '@/providers/ThemeProvider'
+import { Toaster } from '@/components/ui/toaster'
 import Navbar from '@/components/shared/Navbar'
 import Footer from '@/components/shared/Footer'
 
@@ -25,12 +26,14 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <AuthProvider>
-          <Navbar />
-          <main className='min-h-screen flex flex-col justify-center items-center'>
-            {children}
-          </main>
-          <Footer />
-          <Toaster />
+          <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+            <Navbar />
+            <main className='min-h-screen flex flex-col justify-center items-center'>
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
