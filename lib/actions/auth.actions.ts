@@ -1,10 +1,10 @@
-import { Account, Profile } from 'next-auth'
-import { redirect } from 'next/navigation'
-import bcrypt from 'bcrypt'
-import { getServerSession } from 'next-auth'
-import { nextauthOptions } from '@/lib/nextauth-options'
-import connectDB from '@/lib/mongodb'
-import User from '@/lib/models/user.model'
+import { Account, Profile } from "next-auth"
+import { redirect } from "next/navigation"
+import bcrypt from "bcrypt"
+import { getServerSession } from "next-auth"
+import { nextauthOptions } from "@/lib/nextauth-options"
+import connectDB from "@/lib/mongodb"
+import User from "@/lib/models/user.model"
 
 export async function getUserSession () {
   const session = await getServerSession(nextauthOptions)
@@ -53,10 +53,10 @@ export async function getUserByEmail({
 }: GetUserByEmailParams) {
   connectDB()
 
-  const user = await User.findOne({email}).select('-password')
+  const user = await User.findOne({email}).select("-password")
   
   if (!user) {
-    throw new Error('User does not exist!')
+    throw new Error("User does not exist!")
   }
 
   // console.log({user}) // _id: new ObjectId("64f811a7f737a8d376bdabce")
@@ -70,7 +70,7 @@ export interface UpdateUserProfileParams {
 export async function updateUserProfile ({
   name
 }: UpdateUserProfileParams) {
-  'use server'
+  "use server"
   const session = await getServerSession(nextauthOptions)
   // console.log(session)
 
@@ -78,15 +78,15 @@ export async function updateUserProfile ({
     
   try {
     if (!session) {
-      throw new Error('Unauthorization!')
+      throw new Error("Unauthorization!")
     }
 
     const user = await User.findByIdAndUpdate(session?.user?._id, {
       name
-    }, { new: true }).select('-password')
+    }, { new: true }).select("-password")
   
     if (!user) {
-      throw new Error('User does not exist!')
+      throw new Error("User does not exist!")
     }
   
     return { success: true }
@@ -106,14 +106,14 @@ export async function signUpWithCredentials ({
   email,
   password
 }: SignUpWithCredentialsParams) {
-  'use server'
+  "use server"
   connectDB()
 
   try {
     const user = await User.findOne({email})
 
     if (user) {
-      throw new Error('User already exists.')
+      throw new Error("User already exists.")
     }
 
     const salt = await bcrypt.genSalt(10)
@@ -148,8 +148,8 @@ export async function signInWithCredentials ({
   const user = await User.findOne({email})
 
   if (!user) {
-    throw new Error('Invalid email or password!')
-    // throw new Error('User does not exist!')
+    throw new Error("Invalid email or password!")
+    // throw new Error("User does not exist!")
   }
 
   const passwordIsValid = await bcrypt.compare(
@@ -158,8 +158,8 @@ export async function signInWithCredentials ({
   )
 
   if (!passwordIsValid) {
-    throw new Error('Invalid email or password!')
-    // throw new Error('Invalid password!')
+    throw new Error("Invalid email or password!")
+    // throw new Error("Invalid password!")
   }
     
   return {...user._doc, _id: user._id.toString()}
@@ -174,7 +174,7 @@ export async function changeUserPassword ({
   oldPassword,
   newPassword
 }: ChangeUserPasswordParams) {
-  'use server'
+  "use server"
   const { session } = await getUserSession()
   // console.log(session)
 
@@ -182,17 +182,17 @@ export async function changeUserPassword ({
 
   try {
     if (!session) {
-      throw new Error('Unauthorization!')
+      throw new Error("Unauthorization!")
     }
   
-    if (session?.user?.provider !== 'credentials') {
+    if (session?.user?.provider !== "credentials") {
       throw new Error(`Signed in via ${session?.user?.provider}. Changes not allowed with this method.`)
     }
 
     const user = await User.findById(session?.user?._id)
   
     if (!user) {
-      throw new Error('User does not exist!')
+      throw new Error("User does not exist!")
     }
 
     const passwordIsValid = await bcrypt.compare(
@@ -201,7 +201,7 @@ export async function changeUserPassword ({
     )
 
     if (!passwordIsValid) {
-      throw new Error('Incorrect old password.')
+      throw new Error("Incorrect old password.")
     }
   
     const salt = await bcrypt.genSalt(10)

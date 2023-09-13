@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { experimental_useFormStatus as useFormStatus } from 'react-dom'
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
-import { signOut } from 'next-auth/react'
-import { changePasswordValidation } from '@/lib/validations/auth'
-import { ChangeUserPasswordParams } from '@/lib/actions/auth.actions';
+import { useForm } from "react-hook-form";
+import { experimental_useFormStatus as useFormStatus } from "react-dom"
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
+import { signOut } from "next-auth/react"
+import { changePasswordValidation } from "@/lib/validations/auth"
+import { ChangeUserPasswordParams } from "@/lib/actions/auth.actions";
 
 import {
   Form,
@@ -16,11 +16,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import UserAvatar from '@/components/shared/user-avatar';
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { useToast } from '@/components/ui/use-toast'
+} from "@/components/ui/form"
+import UserAvatar from "@/components/shared/user-avatar";
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 
 interface ChangePasswordProps {
   changeUserPassword: (values: ChangeUserPasswordParams) => Promise<{success?: boolean}>}
@@ -35,9 +35,9 @@ function ChangePasswordForm({
   const form = useForm<z.infer<typeof changePasswordValidation>>({
     resolver: zodResolver(changePasswordValidation),
     defaultValues: {
-      oldPassword: '',
-      newPassword: '',
-      confirmPassword: ''
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: ""
     }
   })
 
@@ -50,7 +50,7 @@ function ChangePasswordForm({
 
     if (res?.success) {
       toast({
-        description: 'Change password successfully, Please sign in again.'
+        description: "Change password successfully, Please sign in again."
       })
       signOut({
         redirect: true,
@@ -61,19 +61,19 @@ function ChangePasswordForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
         <UserAvatar />
-        <div className='space-y-2'>
+        <div className="space-y-2">
           <FormField
             control={form.control}
-            name='oldPassword'
+            name="oldPassword"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Old Password</FormLabel>
                 <FormControl>
                   <Input
-                    type='password'
-                    placeholder='your old password'
+                    type="password"
+                    placeholder="your old password"
                     {...field}
                   />
                 </FormControl>
@@ -83,14 +83,14 @@ function ChangePasswordForm({
           />
           <FormField
             control={form.control}
-            name='newPassword'
+            name="newPassword"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>New Password</FormLabel>
                 <FormControl>
                   <Input
-                    type='password'
-                    placeholder='your new password'
+                    type="password"
+                    placeholder="your new password"
                     {...field}
                   />
                 </FormControl>
@@ -100,14 +100,14 @@ function ChangePasswordForm({
           />
           <FormField
             control={form.control}
-            name='confirmPassword'
+            name="confirmPassword"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Confirm your new password</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='Confirm your new password'
-                    type='password'
+                    placeholder="Confirm your new password"
+                    type="password"
                     {...field}
                   />
                 </FormControl>
@@ -117,17 +117,17 @@ function ChangePasswordForm({
           />
         </div>
         <Button
-          className='w-full mt-6'
-          type='submit'
+          className="w-full mt-6"
+          type="submit"
           disabled={pending}
         >
-          {pending ? 'Submitting...' : 'Submit'}
+          {pending ? "Submitting..." : "Submit"}
         </Button>
         <Button
           onClick={() => router.back()}
-          className='w-full mt-2'
+          className="w-full mt-2"
           disabled={pending}
-          variant='outline'
+          variant="outline"
         >
           Cancel
         </Button>

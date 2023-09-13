@@ -1,16 +1,16 @@
-import { NextAuthOptions } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { signInWithOauth, getUserByEmail, signInWithCredentials } from '@/lib/actions/auth.actions'
+import { NextAuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google"
+import CredentialsProvider from "next-auth/providers/credentials"
+import { signInWithOauth, getUserByEmail, signInWithCredentials } from "@/lib/actions/auth.actions"
 
 export const nextauthOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: 'jwt'
+    strategy: "jwt"
   },
   pages: {
-    signIn: '/signin', // app/signin
-    error: '/error', // app/error
+    signIn: "/signin", // app/signin
+    error: "/error", // app/error
   },
   providers: [
     GoogleProvider({
@@ -18,10 +18,10 @@ export const nextauthOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     }),
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        email: { label: 'Email', type: 'email', required: true },
-        password: { label: 'Password', type: 'password', required: true }
+        email: { label: "Email", type: "email", required: true },
+        password: { label: "Password", type: "password", required: true }
       },
       async authorize(credentials) {
         // console.log(credentials)
@@ -42,14 +42,14 @@ export const nextauthOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ account, profile }) {
       // console.log({account, profile})
-      if (account?.type === 'oauth' && profile) {
+      if (account?.type === "oauth" && profile) {
         return await signInWithOauth({account, profile})
       }
       return true
     },
     async jwt({ token, trigger, session }) {
       // console.log({token, trigger, session})
-      if (trigger === 'update') {
+      if (trigger === "update") {
         token.name = session.name
       } else {
         if (token.email) {

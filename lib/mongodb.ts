@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 
 const connection: { isConnected?: number } = {}
 
@@ -8,7 +8,7 @@ const connectDB = async () => {
   }
 
   if (!process.env.MONGODB_URI) {
-    console.error('Error: Invalid/Missing environment variable "MONGODB_URI"')
+    console.error("Error: Invalid/Missing environment variable MONGODB_URI")
     return
   }
 
@@ -18,12 +18,12 @@ const connectDB = async () => {
     connection.isConnected = db.connections[0].readyState
     
     if (connection.isConnected === 1) {
-      console.log('🚀 Successfully connected to database')
+      console.log("🚀 Successfully connected to database")
     } else {
-      console.log('🔴 Failed to connect to database')
+      console.log("🔴 Failed to connect to database")
     }
   } catch (error) {
-    console.log('🔴 Failed to connect to MongoDB:', (error as Error).message)
+    console.log("🔴 Failed to connect to MongoDB:", (error as Error).message)
   }
 }
 

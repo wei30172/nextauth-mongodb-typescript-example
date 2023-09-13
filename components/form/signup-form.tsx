@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { experimental_useFormStatus as useFormStatus } from 'react-dom'
-import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { userSignUpValidation } from '@/lib/validations/auth'
-import { SignUpWithCredentialsParams } from '@/lib/actions/auth.actions';
+import { useForm } from "react-hook-form";
+import { experimental_useFormStatus as useFormStatus } from "react-dom"
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { userSignUpValidation } from "@/lib/validations/auth"
+import { SignUpWithCredentialsParams } from "@/lib/actions/auth.actions";
 
 import {
   Form,
@@ -16,10 +16,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { useToast } from '@/components/ui/use-toast'
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 
 interface SignUpFormProps {
   callbackUrl: string
@@ -35,10 +35,10 @@ function SignUpForm({
   const form = useForm<z.infer<typeof userSignUpValidation>>({
     resolver: zodResolver(userSignUpValidation),
     defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     }
   })
 
@@ -48,25 +48,25 @@ function SignUpForm({
 
     if (res?.success) {
       toast({
-        description: 'Sign up successfully.'
+        description: "Sign up successfully."
       })
-      router.push('/signin')
+      router.push("/signin")
     }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
-        <div className='space-y-2'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        <div className="space-y-2">
           <FormField
             control={form.control}
-            name='name'
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='your username'
+                    placeholder="your username"
                     {...field}
                   />
                 </FormControl>
@@ -76,13 +76,13 @@ function SignUpForm({
           />
           <FormField
             control={form.control}
-            name='email'
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='mail@example.com'
+                    placeholder="mail@example.com"
                     {...field}
                   />
                 </FormControl>
@@ -92,14 +92,14 @@ function SignUpForm({
           />
           <FormField
             control={form.control}
-            name='password'
+            name="password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
-                    type='password'
-                    placeholder='your password'
+                    type="password"
+                    placeholder="your password"
                     {...field}
                   />
                 </FormControl>
@@ -109,14 +109,14 @@ function SignUpForm({
           />
           <FormField
             control={form.control}
-            name='confirmPassword'
+            name="confirmPassword"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Confirm your password</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='Confirm your password'
-                    type='password'
+                    placeholder="Confirm your password"
+                    type="password"
                     {...field}
                   />
                 </FormControl>
@@ -126,21 +126,21 @@ function SignUpForm({
           />
         </div>
         <Button
-          className='w-full mt-6'
-          type='submit'
+          className="w-full mt-6"
+          type="submit"
           disabled={pending}
         >
-          {pending ? 'Submitting...' : 'Sign up'}
+          {pending ? "Submitting..." : "Sign up"}
         </Button>
       </form>
-      <div className='flex items-center justify-center my-4'>
-        <div className='border-b border-gray-400 w-full'></div>
-        <span className='px-2 text-gray-400'>or</span>
-        <div className='border-b border-gray-400 w-full'></div>
+      <div className="flex items-center justify-center my-4">
+        <div className="border-b border-gray-400 w-full"></div>
+        <span className="px-2 text-gray-400">or</span>
+        <div className="border-b border-gray-400 w-full"></div>
       </div>
-      <p className='text-center text-sm text-gray-600 mt-2'>
+      <p className="text-center text-sm text-gray-600 mt-2">
         Already have an account?&nbsp;
-        <Link className='text-blue-600 hover:underline' href='/signin'>
+        <Link className="text-blue-600 hover:underline" href="/signin">
           Sign in
         </Link>
       </p>

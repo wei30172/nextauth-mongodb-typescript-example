@@ -1,5 +1,5 @@
-import SignUpForm from '@/components/form/signup-form'
-import { signUpWithCredentials } from '@/lib/actions/auth.actions';
+import SignUpForm from "@/components/form/signup-form"
+import { signUpWithCredentials } from "@/lib/actions/auth.actions";
 
 interface SignUpPageProps {
   searchParams: {
@@ -12,9 +12,9 @@ export default function SignUpPage({
 }: SignUpPageProps) {
   // console.log({props})
   return (
-    <div className='w-full'>
+    <div className="w-full">
       <SignUpForm
-        callbackUrl={callbackUrl || '/'}
+        callbackUrl={callbackUrl || "/"}
         signUpWithCredentials={signUpWithCredentials}
       />
     </div>

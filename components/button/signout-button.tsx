@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Button } from '@/components/ui/button'
-import { signOut } from 'next-auth/react'
+import { Button } from "@/components/ui/button"
+import { signOut } from "next-auth/react"
 
 function SignOutButton() {
   const signout = () => {
@@ -12,7 +12,7 @@ function SignOutButton() {
   }
 
   return (
-    <Button onClick={signout} variant='destructive'>
+    <Button onClick={signout} variant="destructive">
       Sign Out
     </Button>
   )
