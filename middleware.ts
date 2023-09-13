@@ -1,6 +1,6 @@
-// export { default } from 'next-auth/middleware'
-import { withAuth } from 'next-auth/middleware'
-import { NextResponse } from 'next/server'
+// export { default } from "next-auth/middleware"
+import { withAuth } from "next-auth/middleware"
+import { NextResponse } from "next/server"
 
 export default withAuth(
   function middleware(req) {
@@ -9,7 +9,7 @@ export default withAuth(
     const { token } = req.nextauth
     const { pathname, origin } = req.nextUrl
 
-    if (pathname.startsWith('/dashboard') && token?.role !== 'admin') {
+    if (pathname.startsWith("/dashboard") && token?.role !== "admin") {
       return NextResponse.redirect(`${origin}/unauthorized`)
     }
   },
@@ -22,5 +22,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/profile/:path*']
+  matcher: ["/dashboard/:path*", "/profile/:path*"]
 }
