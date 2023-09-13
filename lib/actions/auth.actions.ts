@@ -2,7 +2,7 @@ import { Account, Profile } from 'next-auth'
 import { redirect } from 'next/navigation'
 import bcrypt from 'bcrypt'
 import { getServerSession } from 'next-auth'
-import { nextauthOptions } from '@/lib/nextauthOptions'
+import { nextauthOptions } from '@/lib/nextauth-options'
 import connectDB from '@/lib/mongodb'
 import User from '@/lib/models/user.model'
 
