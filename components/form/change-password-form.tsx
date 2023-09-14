@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react"
 import { useForm } from "react-hook-form";
 import { experimental_useFormStatus as useFormStatus } from "react-dom"
 import * as z from "zod";
@@ -31,6 +32,7 @@ function ChangePasswordForm({
   const router = useRouter()
   const { pending } = useFormStatus()
   const { toast } = useToast()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const form = useForm<z.infer<typeof changePasswordValidation>>({
     resolver: zodResolver(changePasswordValidation),
@@ -50,12 +52,16 @@ function ChangePasswordForm({
 
     if (res?.success) {
       toast({
-        description: "Change password successfully, Please sign in again."
+        title: "Change password successfully.",
+        description: "You are being signed out..."
       })
-      signOut({
-        redirect: true,
-        callbackUrl: `${window.location.origin}/signin`
-      })
+      setIsLoggingOut(true)
+      setTimeout(() => {
+        signOut({
+          redirect: true,
+          callbackUrl: `${window.location.origin}/signin`
+        })
+      }, 5000)
     }
   }
 
@@ -119,14 +125,14 @@ function ChangePasswordForm({
         <Button
           className="w-full mt-6"
           type="submit"
-          disabled={pending}
+          disabled={pending || isLoggingOut}
         >
           {pending ? "Submitting..." : "Submit"}
         </Button>
         <Button
           onClick={() => router.back()}
           className="w-full mt-2"
-          disabled={pending}
+          disabled={pending || isLoggingOut}
           variant="outline"
         >
           Cancel
