@@ -31,11 +31,6 @@ async function UserNav() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link href="/my-orders">
-                My Orders
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
               <SignOutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>
