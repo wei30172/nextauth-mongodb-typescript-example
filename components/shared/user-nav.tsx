@@ -15,6 +15,7 @@ import UserAvatar from "@/components/shared/user-avatar"
 
 async function UserNav() {
   const { session } = await getUserSession()
+  // console.log(session)
 
   return (
     <div>

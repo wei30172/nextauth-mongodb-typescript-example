@@ -23,7 +23,8 @@ import { useToast } from "@/components/ui/use-toast"
 
 interface SignUpFormProps {
   callbackUrl: string
-  signUpWithCredentials: (values: SignUpWithCredentialsParams) => Promise<{success?: boolean}>}
+  signUpWithCredentials: (values: SignUpWithCredentialsParams) => Promise<{success?: boolean}>
+}
 
 function SignUpForm({
   signUpWithCredentials
