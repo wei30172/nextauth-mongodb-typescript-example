@@ -1,5 +1,5 @@
 {
-  "name": "ecommerce-admin-app",
+  "name": "nextauth-mongodb-typescript-example",
   "version": "0.1.0",
   "private": true,
   "scripts": {
