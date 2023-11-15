@@ -7,11 +7,11 @@ function Footer() {
   return (
     <footer className="flex flex-col text-gray-500 text-sm mt-5 border-t border-gray-100">
       <div className="flex flex-wrap justify-center max-sm:flex-col gap-10 px-6 py-10 sm:gap-20">
-        {footerLinks.map((item) => (
-          <div key={item.title}>
-            <h3 className="font-semibold text-gray-900 dark:text-gray-200">{item.title}</h3>
+        {footerLinks.map((links) => (
+          <div key={links.title}>
+            <h3 className="font-semibold text-gray-900 dark:text-gray-200">{links.title}</h3>
             <div className="flex flex-col gap-2">
-              {item.links.map((link) => (
+              {links.links.map((link) => (
                 <Link
                   key={link.title}
                   href={link.url}

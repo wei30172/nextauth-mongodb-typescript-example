@@ -6,7 +6,7 @@ export const userSignInValidation = z.object({
     .email("Invalid email"),
   password: z.string()
     .min(1, "Password is required")
-    .min(8, "Password must have than 8 characters"),
+    .min(8, "Password must be 8+ characters"),
 })
 
 export const userSignUpValidation = z
@@ -19,7 +19,7 @@ export const userSignUpValidation = z
       .email("Invalid email"),
     password: z.string()
       .min(1, "Password is required")
-      .min(8, "Password must have than 8 characters"),
+      .min(8, "Password must be 8+ characters"),
     confirmPassword: z.string()
       .min(1, "Password confirmation is required"),
   })
@@ -39,10 +39,10 @@ export const changePasswordValidation = z
   .object({
     oldPassword: z.string()
       .min(1, "Old password is required")
-      .min(8, "Password must have than 8 characters"),
+      .min(8, "Password must be 8+ characters"),
     newPassword: z.string()
       .min(1, "New password is required")
-      .min(8, "Password must have than 8 characters"),
+      .min(8, "Password must be 8+ characters"),
     confirmPassword: z.string()
       .min(1, "Password confirmation is required"),
   })

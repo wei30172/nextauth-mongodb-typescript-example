@@ -13,7 +13,7 @@ function MainNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="flex items-center lg:space-x-6 mx-4">
+    <div className="flex items-center lg:space-x-6 mx-4">
       <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden">
         <Menu />
       </button>
@@ -27,7 +27,7 @@ function MainNav() {
             key={link.title}
             href={link.url}
             className={cn(
-              "block py-2 px-4 text-sm transition-colors hover:text-primary",
+              "block py-2 px-4 text-sm transition-colors",
               pathname === link.url ? "text-black dark:text-white" : "text-muted-foreground"
             )}
           >
@@ -35,7 +35,7 @@ function MainNav() {
           </Link>
         ))}
       </div>
-    </nav>
+    </div>
   )
 }
 

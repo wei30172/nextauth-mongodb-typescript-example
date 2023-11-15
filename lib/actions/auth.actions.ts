@@ -175,7 +175,7 @@ export async function changeUserPassword ({
   newPassword
 }: ChangeUserPasswordParams) {
   "use server"
-  const { session } = await getUserSession()
+  const session = await getServerSession(nextauthOptions)
   // console.log(session)
 
   connectDB()

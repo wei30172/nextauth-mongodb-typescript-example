@@ -116,8 +116,8 @@ function SignUpForm({
                 <FormLabel>Confirm your password</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Confirm your password"
                     type="password"
+                    placeholder="confirm your password"
                     {...field}
                   />
                 </FormControl>

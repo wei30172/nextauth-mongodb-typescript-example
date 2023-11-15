@@ -39,7 +39,7 @@ GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET
   
 - Click on CREATE CREDENTIALS => OAuth client ID.
   
-- Choose Web application.
+- Choose the Web application.
 
 - Add to Authorized JavaScript origins: http://localhost:3000 .
 
