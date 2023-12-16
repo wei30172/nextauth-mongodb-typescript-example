@@ -1,13 +1,10 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { signInWithOauth, getUserByEmail, signInWithCredentials } from "@/lib/actions/auth.actions"
 
 export const nextauthOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: "jwt"
-  },
   pages: {
     signIn: "/signin", // app/signin
     error: "/error", // app/error
@@ -33,11 +30,11 @@ export const nextauthOptions: NextAuthOptions = {
           email: credentials?.email,
           password: credentials?.password
         })
-        // console.log({user})
 
+        // console.log({user})
         return user
       }
-    }),
+    })
   ],
   callbacks: {
     async signIn({ account, profile }) {

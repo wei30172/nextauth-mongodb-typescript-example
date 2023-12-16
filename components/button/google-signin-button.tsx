@@ -1,15 +1,15 @@
-import { signIn } from "next-auth/react"
-import { Button } from "@/components/ui/button"
+import { signIn } from 'next-auth/react'
+import { Button } from '@/components/ui/button'
 
 interface GoogleSignInButtonProps {
   children: React.ReactNode
   callbackUrl: string
 }
-
-function GoogleSignInButton({
+const GoogleSignInButton = ({
   children,
   callbackUrl
-}: GoogleSignInButtonProps) {
+}: GoogleSignInButtonProps) => {
+
   const loginWithGoogle = async () => {
     await signIn("google", { callbackUrl })
   }

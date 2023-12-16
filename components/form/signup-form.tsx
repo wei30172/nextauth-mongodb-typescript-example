@@ -1,14 +1,17 @@
-"use client";
+"use client"
 
-import { useForm } from "react-hook-form";
-import { experimental_useFormStatus as useFormStatus } from "react-dom"
-import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { experimental_useFormStatus as useFormStatus } from 'react-dom'
+// 在最新版本的 react-dom 中，使用 useFormStatus 來管理表單狀態。
+// import { useFormStatus } from 'react-dom'
 import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { userSignUpValidation } from "@/lib/validations/auth"
-import { SignUpWithCredentialsParams } from "@/lib/actions/auth.actions";
+import { SignUpWithCredentialsParams } from "@/lib/actions/auth.actions"
 
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -18,17 +21,16 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 
 interface SignUpFormProps {
-  callbackUrl: string
+  callbackUrl: string,
   signUpWithCredentials: (values: SignUpWithCredentialsParams) => Promise<{success?: boolean}>
 }
 
-function SignUpForm({
+const SignUpForm = ({
   signUpWithCredentials
-}: SignUpFormProps) {
+}: SignUpFormProps) => {
   const router = useRouter()
   const { pending } = useFormStatus()
   const { toast } = useToast()
@@ -43,7 +45,7 @@ function SignUpForm({
     }
   })
 
-  const onSubmit = async (values: z.infer<typeof userSignUpValidation>) => {
+  async function onSubmit(values: z.infer<typeof userSignUpValidation>) {
     // console.log(values)
     const res = await signUpWithCredentials(values)
 
@@ -66,10 +68,7 @@ function SignUpForm({
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="your username"
-                    {...field}
-                  />
+                  <Input placeholder="your username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,10 +81,7 @@ function SignUpForm({
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="mail@example.com"
-                    {...field}
-                  />
+                  <Input placeholder="mail@example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -131,7 +127,7 @@ function SignUpForm({
           type="submit"
           disabled={pending}
         >
-          {pending ? "Submitting..." : "Sign up"}
+          {pending ? "Submitting..." : "Sign Up"}
         </Button>
       </form>
       <div className="flex items-center justify-center my-4">
@@ -142,7 +138,7 @@ function SignUpForm({
       <p className="text-center text-sm text-gray-600 mt-2">
         Already have an account?&nbsp;
         <Link className="text-blue-600 hover:underline" href="/signin">
-          Sign in
+          Sign In
         </Link>
       </p>
     </Form>

@@ -1,15 +1,18 @@
-"use client";
+"use client"
 
 import { useState } from "react"
-import { useForm } from "react-hook-form";
-import { experimental_useFormStatus as useFormStatus } from "react-dom"
-import * as z from "zod";
+import { useForm } from "react-hook-form"
+import { experimental_useFormStatus as useFormStatus } from 'react-dom'
+// 在最新版本的 react-dom 中，使用 useFormStatus 來管理表單狀態。
+// import { useFormStatus } from 'react-dom'
 import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
 import { useRouter } from "next/navigation"
 import { signOut } from "next-auth/react"
 import { changePasswordValidation } from "@/lib/validations/auth"
-import { ChangeUserPasswordParams } from "@/lib/actions/auth.actions";
+import { ChangeUserPasswordParams } from "@/lib/actions/auth.actions"
 
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -18,17 +21,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import UserAvatar from "@/components/shared/user-avatar";
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 
 interface ChangePasswordProps {
-  changeUserPassword: (values: ChangeUserPasswordParams) => Promise<{success?: boolean}>}
+  changeUserPassword: (values: ChangeUserPasswordParams) => Promise<{success?: boolean}>
+}
 
-function ChangePasswordForm({
+const ChangePasswordForm = ({
   changeUserPassword
-}: ChangePasswordProps) {
+}: ChangePasswordProps) => {
   const router = useRouter()
   const { pending } = useFormStatus()
   const { toast } = useToast()
@@ -43,13 +45,13 @@ function ChangePasswordForm({
     }
   })
 
-  const onSubmit = async (values: z.infer<typeof changePasswordValidation>) => {
+  async function onSubmit(values: z.infer<typeof changePasswordValidation>) {
     // console.log(values)
     const res = await changeUserPassword({
       oldPassword: values.oldPassword,
-      newPassword: values.newPassword,
+      newPassword: values.newPassword
     })
-
+    
     if (res?.success) {
       toast({
         title: "Change password successfully.",
@@ -68,7 +70,6 @@ function ChangePasswordForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <UserAvatar />
         <div className="space-y-2">
           <FormField
             control={form.control}
@@ -112,8 +113,8 @@ function ChangePasswordForm({
                 <FormLabel>Confirm your new password</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Confirm your new password"
                     type="password"
+                    placeholder="Confirm your new password"
                     {...field}
                   />
                 </FormControl>
@@ -127,7 +128,7 @@ function ChangePasswordForm({
           type="submit"
           disabled={pending || isLoggingOut}
         >
-          {pending ? "Submitting..." : "Submit"}
+          {pending ? "Submitting..." : "Change"}
         </Button>
         <Button
           onClick={() => router.back()}

@@ -1,10 +1,13 @@
 import UpdateForm from "@/components/form/update-form"
 import { updateUserProfile } from "@/lib/actions/auth.actions"
 
-export default function ProfilePage() {
+const ProfilePage = async () => {
   return (
     <div className="w-full">
-      <UpdateForm updateUserProfile={updateUserProfile}/>
+      <UpdateForm updateUserProfile={updateUserProfile} />
     </div>
   )
 }
+
+
+export default ProfilePage

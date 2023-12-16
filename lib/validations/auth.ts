@@ -1,5 +1,5 @@
-import * as z from "zod";
-
+import * as z from "zod"
+ 
 export const userSignInValidation = z.object({
   email: z.string()
     .min(1, "Email is required")
@@ -13,7 +13,7 @@ export const userSignUpValidation = z
   .object({
     name: z.string()
       .min(1, "Username is required")
-      .max(50),
+      .max(50, "Username must be less than 50 characters"),
     email: z.string()
       .min(1, "Email is required")
       .email("Invalid email"),
@@ -32,7 +32,7 @@ export const userUpdateValidation = z
   .object({
     name: z.string()
       .min(1, "Username is required")
-      .max(50, "Username must be less than 50 characters")
+      .max(50, "Username must be less than 50 characters"),
   })
 
 export const changePasswordValidation = z
@@ -48,7 +48,7 @@ export const changePasswordValidation = z
   })
   .refine((data) => data.oldPassword !== data.newPassword, {
     path: ["newPassword"],
-    message: "New password must differ from old.",
+    message: "New password must differ from old",
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     path: ["confirmPassword"],

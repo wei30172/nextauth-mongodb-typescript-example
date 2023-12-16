@@ -1,13 +1,16 @@
-"use client";
+"use client"
 
-import { useForm } from "react-hook-form";
-import { experimental_useFormStatus as useFormStatus } from "react-dom"
-import * as z from "zod";
+import { useForm } from "react-hook-form"
+import { experimental_useFormStatus as useFormStatus } from 'react-dom'
+// 在最新版本的 react-dom 中，使用 useFormStatus 來管理表單狀態。
+// import { useFormStatus } from 'react-dom'
 import { zodResolver } from "@hookform/resolvers/zod"
-import Link from "next/link"
-import { userSignInValidation } from "@/lib/validations/auth"
+import * as z from "zod"
 import { signIn } from "next-auth/react"
+import { userSignInValidation } from "@/lib/validations/auth"
+import Link from "next/link"
 
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -17,27 +20,26 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import GoogleSignInButton from "@/components/button/google-signin-button"
 
 interface SignInFormProps {
   callbackUrl: string
 }
 
-function SignInForm({
+const SignInForm = ({
   callbackUrl
-}: SignInFormProps) {
+}: SignInFormProps) => {
   const { pending } = useFormStatus()
 
   const form = useForm<z.infer<typeof userSignInValidation>>({
     resolver: zodResolver(userSignInValidation),
     defaultValues: {
       email: "",
-      password: "",
+      password: ""
     }
   })
 
-  const onSubmit = async (values: z.infer<typeof userSignInValidation>) => {
+  async function onSubmit(values: z.infer<typeof userSignInValidation>) {
     // console.log(values)
     await signIn("credentials", {
       email: values.email,
@@ -57,10 +59,7 @@ function SignInForm({
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="mail@example.com"
-                    {...field}
-                  />
+                  <Input placeholder="mail@example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +88,7 @@ function SignInForm({
           type="submit"
           disabled={pending}
         >
-          {pending ? "Submitting..." : "Sign in"}
+          {pending ? "Submitting..." : "Sign In"}
         </Button>
       </form>
       <div className="flex items-center justify-center my-4">
@@ -103,7 +102,7 @@ function SignInForm({
       <p className="text-center text-sm text-gray-600 mt-2">
         Don&apos;t have an account?&nbsp;
         <Link className="text-blue-600 hover:underline" href="/signup">
-          Sign up
+          Sign Up
         </Link>
       </p>
     </Form>

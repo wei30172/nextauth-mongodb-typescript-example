@@ -10,10 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { buttonVariants } from "@/components/ui/button"
-import SignOutButton from "@/components/button/signout-button"
 import UserAvatar from "@/components/shared/user-avatar"
+import SignOutButton from "@/components/button/signout-button"
 
-async function UserNav() {
+const UserNav = async () => {
   const { session } = await getUserSession()
   // console.log(session)
 
@@ -37,7 +37,7 @@ async function UserNav() {
         </DropdownMenu>
       ) : (
         <Link className={buttonVariants()} href="/signin">
-          Sign in
+          Sign In
         </Link>
       )}
     </div>

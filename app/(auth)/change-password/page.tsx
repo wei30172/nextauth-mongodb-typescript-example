@@ -1,10 +1,13 @@
 import ChangePasswordForm from "@/components/form/change-password-form"
 import { changeUserPassword } from "@/lib/actions/auth.actions"
 
-export default function ChangePasswordPage() {
+const ChangePasswordPage = async () => {
   return (
     <div className="w-full">
-      <ChangePasswordForm changeUserPassword={changeUserPassword}/>
+      <ChangePasswordForm changeUserPassword={changeUserPassword} />
     </div>
   )
 }
+
+
+export default ChangePasswordPage

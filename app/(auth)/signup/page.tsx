@@ -1,5 +1,5 @@
+import { signUpWithCredentials } from "@/lib/actions/auth.actions"
 import SignUpForm from "@/components/form/signup-form"
-import { signUpWithCredentials } from "@/lib/actions/auth.actions";
 
 interface SignUpPageProps {
   searchParams: {
@@ -7,10 +7,9 @@ interface SignUpPageProps {
   }
 }
 
-export default function SignUpPage({
+const SignUpPage = ({
   searchParams: { callbackUrl }
-}: SignUpPageProps) {
-  // console.log({props})
+}: SignUpPageProps) => {
   return (
     <div className="w-full">
       <SignUpForm
@@ -20,3 +19,5 @@ export default function SignUpPage({
     </div>
   )
 }
+
+export default SignUpPage

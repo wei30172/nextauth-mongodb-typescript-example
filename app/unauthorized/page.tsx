@@ -1,9 +1,9 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 
-export default function Unauthorized() {
+const Unauthorized = () => {
   const router = useRouter()
 
   return (
@@ -11,9 +11,12 @@ export default function Unauthorized() {
       <h1 className="text-red-500 font-semibold">You Are Not Authorized!</h1>
       <Button
         onClick={() => router.push("/")}
-        className="w-full mt-2">
+        className="w-full mt-2"
+      >
         Go Home
       </Button>
     </section>
   )
 }
+
+export default Unauthorized

@@ -1,18 +1,20 @@
+"use server" // 開頭統一加上"use server"即可
+
+import { getServerSession } from "next-auth/next"
 import { Account, Profile } from "next-auth"
 import { redirect } from "next/navigation"
 import bcrypt from "bcrypt"
-import { getServerSession } from "next-auth"
 import { nextauthOptions } from "@/lib/nextauth-options"
 import connectDB from "@/lib/mongodb"
 import User from "@/lib/models/user.model"
 
-export async function getUserSession () {
+export async function getUserSession() {
   const session = await getServerSession(nextauthOptions)
   return ({ session })
 }
 
 interface ExtendedProfile extends Profile {
-  picture?: string;
+  picture?: string
 }
 
 interface SignInWithOauthParams {
@@ -20,7 +22,7 @@ interface SignInWithOauthParams {
   profile: ExtendedProfile
 }
 
-export async function signInWithOauth ({
+export async function signInWithOauth({
   account,
   profile
 }: SignInWithOauthParams) {
@@ -28,9 +30,9 @@ export async function signInWithOauth ({
   connectDB()
 
   const user = await User.findOne({email: profile.email})
-
-  if (user) return true
   
+  if (user) return true
+
   const newUser = new User({
     name: profile.name,
     email: profile.email,
@@ -54,28 +56,27 @@ export async function getUserByEmail({
   connectDB()
 
   const user = await User.findOne({email}).select("-password")
-  
+
   if (!user) {
-    throw new Error("User does not exist!")
+    throw new Error ("User does not exist!")
   }
 
-  // console.log({user}) // _id: new ObjectId("64f811a7f737a8d376bdabce")
+  // console.log({user})
   return {...user._doc, _id: user._id.toString()}
 }
 
 export interface UpdateUserProfileParams {
-  name: string,
+  name: string
 }
 
-export async function updateUserProfile ({
+export async function updateUserProfile({
   name
 }: UpdateUserProfileParams) {
-  "use server"
   const session = await getServerSession(nextauthOptions)
   // console.log(session)
 
   connectDB()
-    
+
   try {
     if (!session) {
       throw new Error("Unauthorization!")
@@ -84,11 +85,11 @@ export async function updateUserProfile ({
     const user = await User.findByIdAndUpdate(session?.user?._id, {
       name
     }, { new: true }).select("-password")
-  
+
     if (!user) {
-      throw new Error("User does not exist!")
+      throw new Error ("User does not exist!")
     }
-  
+
     return { success: true }
   } catch (error) {
     redirect(`/error?error=${(error as Error).message}`)
@@ -98,7 +99,7 @@ export async function updateUserProfile ({
 export interface SignUpWithCredentialsParams {
   name: string,
   email: string,
-  password: string,
+  password: string
 }
 
 export async function signUpWithCredentials ({
@@ -106,7 +107,6 @@ export async function signUpWithCredentials ({
   email,
   password
 }: SignUpWithCredentialsParams) {
-  "use server"
   connectDB()
 
   try {
@@ -134,9 +134,9 @@ export async function signUpWithCredentials ({
   }
 }
 
-export interface SignInWithCredentialsParams {
+interface SignInWithCredentialsParams {
   email: string,
-  password: string,
+  password: string
 }
 
 export async function signInWithCredentials ({
@@ -144,12 +144,11 @@ export async function signInWithCredentials ({
   password
 }: SignInWithCredentialsParams) {
   connectDB()
-  
+
   const user = await User.findOne({email})
 
   if (!user) {
     throw new Error("Invalid email or password!")
-    // throw new Error("User does not exist!")
   }
 
   const passwordIsValid = await bcrypt.compare(
@@ -158,10 +157,9 @@ export async function signInWithCredentials ({
   )
 
   if (!passwordIsValid) {
-    throw new Error("Invalid email or password!")
-    // throw new Error("Invalid password!")
+    throw new Error("Invalid email or password")
   }
-    
+
   return {...user._doc, _id: user._id.toString()}
 }
 
@@ -174,7 +172,6 @@ export async function changeUserPassword ({
   oldPassword,
   newPassword
 }: ChangeUserPasswordParams) {
-  "use server"
   const session = await getServerSession(nextauthOptions)
   // console.log(session)
 
@@ -184,13 +181,13 @@ export async function changeUserPassword ({
     if (!session) {
       throw new Error("Unauthorization!")
     }
-  
+
     if (session?.user?.provider !== "credentials") {
       throw new Error(`Signed in via ${session?.user?.provider}. Changes not allowed with this method.`)
     }
 
     const user = await User.findById(session?.user?._id)
-  
+
     if (!user) {
       throw new Error("User does not exist!")
     }
@@ -203,7 +200,7 @@ export async function changeUserPassword ({
     if (!passwordIsValid) {
       throw new Error("Incorrect old password.")
     }
-  
+
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(newPassword, salt)
 

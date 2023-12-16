@@ -3,13 +3,15 @@ import { footerLinks } from "@/constants"
 
 import { Code } from "lucide-react"
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="flex flex-col text-gray-500 text-sm mt-5 border-t border-gray-100">
       <div className="flex flex-wrap justify-center max-sm:flex-col gap-10 px-6 py-10 sm:gap-20">
         {footerLinks.map((links) => (
           <div key={links.title}>
-            <h3 className="font-semibold text-gray-900 dark:text-gray-200">{links.title}</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-gray-200">
+              {links.title}
+            </h3>
             <div className="flex flex-col gap-2">
               {links.links.map((link) => (
                 <Link
@@ -23,13 +25,13 @@ function Footer() {
             </div>
           </div>
         ))}
-      </div>
 
-      <div className="flex items-center justify-between flex-wrap border-t border-gray-100 gap-8 px-6 py-4 sm:px-20">
+      </div>
+      <div className="flex flex-wrap items-center justify-between border-t border-gray-100 gap-8 px-6 py-4 sm:px-20">
         <div className="flex items-center gap-2">
           <Code />
           <p className="text-gray-900 dark:text-gray-200">
-            &copy; Web<br />
+            &copy; Web
           </p>
         </div>
         <div className="flex max-sm:flex-col gap-2 sm:gap-4">

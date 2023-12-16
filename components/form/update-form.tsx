@@ -1,14 +1,17 @@
-"use client";
+"use client"
 
-import { useForm } from "react-hook-form";
-import { experimental_useFormStatus as useFormStatus } from "react-dom"
-import * as z from "zod";
+import { useForm } from "react-hook-form"
+import { experimental_useFormStatus as useFormStatus } from 'react-dom'
+// 在最新版本的 react-dom 中，使用 useFormStatus 來管理表單狀態。
+// import { useFormStatus } from 'react-dom'
 import { zodResolver } from "@hookform/resolvers/zod"
-import Link from "next/link"
+import * as z from "zod"
 import { useSession } from "next-auth/react"
 import { userUpdateValidation } from "@/lib/validations/auth"
-import { UpdateUserProfileParams } from "@/lib/actions/auth.actions";
+import { UpdateUserProfileParams } from "@/lib/actions/auth.actions"
+import Link from "next/link"
 
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -17,17 +20,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import UserAvatar from "@/components/shared/user-avatar";
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
+import UserAvatar from "@/components/shared/user-avatar"
 
 interface UpdateFormProps {
-  updateUserProfile: (values: UpdateUserProfileParams) => Promise<{success?: boolean}>}
+  updateUserProfile: (values: UpdateUserProfileParams) => Promise<{success?: boolean}>
+}
 
-function UpdateForm({
+const UpdateForm = ({
   updateUserProfile
-}: UpdateFormProps) {
+}: UpdateFormProps) => {
   const { data: session, update } = useSession()
   const { pending } = useFormStatus()
   const { toast } = useToast()
@@ -35,15 +38,14 @@ function UpdateForm({
   const form = useForm<z.infer<typeof userUpdateValidation>>({
     resolver: zodResolver(userUpdateValidation),
     defaultValues: {
-      name: ""
+      name: "",
     }
   })
 
-  const onSubmit = async (values: z.infer<typeof userUpdateValidation>) => {
+  async function onSubmit(values: z.infer<typeof userUpdateValidation>) {
     update({name: values.name})
-    // console.log(values)
     const res = await updateUserProfile(values)
-
+    
     if (res?.success) {
       toast({
         description: "Update successfully."
@@ -53,8 +55,8 @@ function UpdateForm({
 
   return (
     <Form {...form}>
+      <UserAvatar />
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <UserAvatar />
         <div className="space-y-2">
           <FormField
             control={form.control}
@@ -63,10 +65,7 @@ function UpdateForm({
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="new username"
-                    {...field}
-                  />
+                  <Input placeholder="new username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

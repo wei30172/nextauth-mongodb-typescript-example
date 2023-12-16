@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
-export default function Error() {
+const Error = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const errMsg = searchParams.get("error")
@@ -14,9 +14,12 @@ export default function Error() {
       <Button
         onClick={() => router.back()}
         className="w-full mt-2"
-        variant="destructive">
+        variant="destructive"
+      >
         Try Again
       </Button>
     </section>
   )
 }
+
+export default Error
