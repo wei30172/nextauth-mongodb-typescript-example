@@ -1,5 +1,5 @@
-## NextAuth MongoDB Typescript Example  
-A demo project using Next-Auth for authentication. It connects to MongoDB via Mongoose and supports Google OAuth and email/password logins.
+## NextAuth.js MongoDB Typescript Example  
+A demo project using NextAuth.js for authentication. It connects to MongoDB via Mongoose and supports Google OAuth and email/password logins.
 
 ## Features
 - OAuth: Log in with Google.
